@@ -148,7 +148,7 @@ function stripWikitextMarkup(str) {
   return s.replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim()
 }
 
-function extractQuoteAndInfobox(wikitext) {
+export function extractQuoteAndInfobox(wikitext) {
   const result = {
     quote: null,
     infoboxType: null,
@@ -711,6 +711,52 @@ const SOVEREIGN_ONTOLOGY_PROFILES = {
       '03 · Love <-> Space (Ma)': 'Scatters across the planet for a year of fallow stillness after granting wishes.',
     },
   },
+  luffy: {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation: 'World Government / Celestial Dragon 800-year ideological cage, Impel Down chains, and scalar bounty reductionism.',
+      alex_qmom_unbound_reflection:
+        'Gear 5 shatters the literal panels of the world\'s cage: "too many customs can be brilliant yet hinder creativity. it puts people into boxes and constraints... a form of bondage that need to be broken out of. .oOo. Poo .oOo."',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation: 'The heartbeat pause on the Onigashima rooftop before the Drums of Liberation awaken — emptiness of fixed form (rubber/imagination).',
+      meditation_anchor: '002 · Crickets in Shinjuku Gyoen · Drone Zone · 432 Hz',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation: 'Sun God Nika / Gear 5 — pure joyful liberation and a banquet big enough for the whole world ({<3,<3,<3}+1).',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Liberates islands without ever claiming territory or ruling over them.',
+      '02 · Understanding <-> Respect': 'Listens to the unspoken cry ("Help me" — Nami, Robin, Sanji) before acting.',
+      '03 · Love <-> Space (Ma)': 'Being Pirate King means having the most freedom on the sea — never controlling others.',
+    },
+  },
+  naruto: {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation: 'The Cycle of Hatred, Jinchuriki ostracization seal, and Madara\'s Infinite Tsukuyomi (a false +1* dream cage).',
+      alex_qmom_unbound_reflection:
+        'Refusing the shinobi tool-box: "A shinobi is not a unfeeling tool" (.oOo. Poo .oOo.).',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation: 'Mount Myoboku Sage Mode stillness & Waterfall of Truth — embracing the shadow self at zero-point equilibrium.',
+      meditation_anchor: '002 · Crickets in Shinjuku Gyoen · Drone Zone · 432 Hz',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation: 'Kurama Link / Six Paths Sage Mode & Ninshu (shared chakra resonance) — turning enemy hatred into family hearth ({<3,<3,<3}+1).',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Stops the cycle of vengeance against Nagato/Pain and Obito.',
+      '02 · Understanding <-> Respect': 'Shares pain directly via chakra linkage rather than conquering from above.',
+      '03 · Love <-> Space (Ma)': 'Waits patiently for Sasuke at the Valley of the End until both arms drop the sword.',
+    },
+  },
 }
 
 export async function runSovereignOntology(targetOrArgs, maybeWiki = DEFAULT_WIKI) {
@@ -736,13 +782,9 @@ export async function runSovereignOntology(targetOrArgs, maybeWiki = DEFAULT_WIK
   const firstToken = normTitle.split(' ')[0]
   const profileKey = SOVEREIGN_ONTOLOGY_PROFILES[normTitle]
     ? normTitle
-    : normTitle.includes('gohan')
-      ? 'gohan'
-      : normTitle.includes('ultra instinct')
-        ? 'ultra instinct'
-        : SOVEREIGN_ONTOLOGY_PROFILES[firstToken]
-          ? firstToken
-          : null
+    : SOVEREIGN_ONTOLOGY_PROFILES[firstToken]
+      ? firstToken
+      : Object.keys(SOVEREIGN_ONTOLOGY_PROFILES).find((k) => normTitle.includes(k)) || null
 
   const preset = profileKey ? SOVEREIGN_ONTOLOGY_PROFILES[profileKey] : null
   const race = box.Race || box.race || box.Species || 'Sovereign Lore Entity'

@@ -1,7 +1,7 @@
 {
   "name": "@8b-is/fandom-mcp",
-  "version": "1.0.0",
-  "description": "8b-is Fandom Wiki Consumption MCP Server — Dragon Ball Universe Scouter & Multi-Fandom MediaWiki Engine",
+  "version": "1.1.0",
+  "description": "8b-is Fandom Wiki Consumption & Sovereign Library Ontology MCP Server — Dragon Ball Universe Scouter & Multi-Fandom MediaWiki Engine",
   "type": "module",
   "main": "fandom-mcp.mjs",
   "bin": {
@@ -9,7 +9,9 @@
   },
   "scripts": {
     "start": "node fandom-mcp.mjs",
-    "test": "node fandom-mcp.mjs --scouter Goku --compare Vegeta"
+    "test": "node --test test.mjs",
+    "scouter": "node fandom-mcp.mjs --scouter Goku --compare Vegeta",
+    "ontology": "node fandom-mcp.mjs --ontology Goku"
   },
   "repository": {
     "type": "git",

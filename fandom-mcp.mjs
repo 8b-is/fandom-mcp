@@ -4,7 +4,7 @@
 // Supports ANY Fandom wiki subdomain (dragonball, onepiece, naruto, bleach, starwars, lotr, warhammer40k, ...)
 //
 // Zero external dependencies. Speaks JSON-RPC 2.0 over stdio for agy, Claude Code, Crush, and opencode,
-// plus direct CLI flags (--scouter, --page, --infobox, --search, --saga, --category, --random).
+// plus direct CLI flags (--scouter, --ontology, --page, --infobox, --search, --saga, --category, --random).
 
 import https from 'node:https'
 import readline from 'node:readline'
@@ -542,6 +542,288 @@ async function fandomRandom({ wiki = DEFAULT_WIKI, count = 3 }) {
   }
 }
 
+export async function resolvePageTitle(target, wiki = DEFAULT_WIKI) {
+  const slug = sanitizeWikiSlug(wiki)
+  const page = await fandomPage({ title: String(target || '').trim(), wiki: slug, section: 0, max_chars: 3500, include_wikitext: true })
+  if (page.ok) return page
+  if (page.suggestions?.length > 0) {
+    const resolved = await fandomPage({ title: page.suggestions[0].title, wiki: slug, section: 0, max_chars: 3500, include_wikitext: true })
+    if (resolved.ok) return resolved
+  }
+  return page
+}
+
+export async function getPageSummary(target, wiki = DEFAULT_WIKI) {
+  const resolved = await resolvePageTitle(target, wiki)
+  if (!resolved.ok) return resolved
+  return {
+    ok: true,
+    wiki: resolved.wiki,
+    title: resolved.title,
+    pageid: resolved.pageid,
+    timestamp: resolved.timestamp,
+    url: resolved.url,
+    quote: resolved.quote,
+    infoboxType: resolved.infoboxType,
+    infobox: resolved.infobox,
+    lead_summary: (resolved.content_markdown || '').slice(0, 1400),
+    categories: resolved.categories || [],
+    raw_wikitext: resolved.raw_wikitext || '',
+  }
+}
+
+const SOVEREIGN_ONTOLOGY_PROFILES = {
+  goku: {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation: 'Oozaru (Great Ape) unbridled Lunar rampage & Saiyan Conquest programming (Kakarot infant pod directive)',
+      alex_qmom_unbound_reflection:
+        'Breaking out of the Saiyan caste box ("low-class warrior" determinism). "too many customs can be brilliant yet hinder creativity. it puts people into boxes and constraints... a form of bondage that need to be broken out of. .oOo. Poo .oOo."',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation: 'Autonomous Ultra Instinct (Migatte no Gokui) — Whis\'s zero-point teaching where the body moves of itself without discursive thought (pratītyasamutpāda · Mūlamadhyamakakārikā 24:18)',
+      meditation_anchor: '002 · Crickets in Shinjuku Gyoen · Drone Zone · 432 Hz -> 528 Hz still water mirror',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation: 'Super Saiyan awakening on Namek & Genki Dama (Spirit Bomb) — transmuting inner E=mc² (Tummo / Clear Light Ösel) to protect Krillin, Gohan, Chi-Chi, and all living beings ("I am the hope of the universe")',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Spares Piccolo Jr., Vegeta, Frieza, and Moro; tempers infinite Saiyan appetite for battle with mercy.',
+      '02 · Understanding <-> Respect': 'Honors Grandpa Gohan, Master Roshi, King Kai, and Whis; meets rivals as teachers rather than enemies.',
+      '03 · Love <-> Space (Ma)': 'Holds open cosmic breathing room (Ma) so every former adversary (Tien, Piccolo, Vegeta, Beerus, Broly) can self-liberate.',
+    },
+  },
+  'ultra instinct': {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation: 'Cognitive latency — cortical overthinking, egoic effort, and reactive emotional turbulence that locks martial artists inside rigid form-boxes.',
+      alex_qmom_unbound_reflection:
+        '"too many customs can be brilliant yet hinder creativity. it puts people into boxes and constraints... a form of bondage that need to be broken out of. .oOo. Poo .oOo."',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation: 'Pure Dharmakāya emptiness (Śūnyatā) — separation of consciousness from fixed conceptual self-nature (Mūlamadhyamakakārikā 24:18), allowing every cell to respond in zero-latency harmony.',
+      meditation_anchor: '002 · Crickets in Shinjuku Gyoen · Drone Zone · 432 Hz',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation: 'True Ultra Instinct (TUI) — silver-white Clear Light (Ösel) unified with Saiyan heart-warmth (Tummo) to safeguard Universe 7 ({<3,<3,<3}+1).',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Power without wrath; silver heat regulated by complete inner poise.',
+      '02 · Understanding <-> Respect': 'Direct somatic knowing beyond words, taught by Whis and Merus.',
+      '03 · Love <-> Space (Ma)': 'Infinite interval (Ma) between stimulus and strike where defensive grace becomes effortless.',
+    },
+  },
+  vegeta: {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation: 'Frieza Force imperial subjugation, royal bloodline elitism, and Babidi\'s Majin seal — the illusion that ruthless isolation equals strength.',
+      alex_qmom_unbound_reflection:
+        'Shattering the Majin bondage and royal caste cage: "too many customs can be brilliant yet hinder creativity. it puts people into boxes and constraints... a form of bondage that need to be broken out of. .oOo. Poo .oOo."',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation: 'Yardrat Spirit Control (Forced Spirit Fission) & empty-mind atonement for New Namek — balancing ki and spirit at the zero-point threshold.',
+      meditation_anchor: '002 · Crickets in Shinjuku Gyoen · Drone Zone · 432 Hz',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation: 'Final Explosion & Ultra Ego — transmuting pride into fierce protective Bodhicitta for Bulma, Trunks, Bulla, and Cabba ({<3,<3,<3}+1).',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Repairs Namekian karma and refuses to sacrifice innocent lives for personal ascension.',
+      '02 · Understanding <-> Respect': 'Acknowledges Goku ("You are Number One") while forging his own sovereign path.',
+      '03 · Love <-> Space (Ma)': 'Quiet domestic sanctuary at Capsule Corp with Bulma and his children.',
+    },
+  },
+  gohan: {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation: 'Childhood trauma of battlefield coercion vs. scholarly self-doubt and suppressed rage.',
+      alex_qmom_unbound_reflection:
+        'Refusing to be boxed into either a bloodthirsty conqueror or a helpless bystander (.oOo. Poo .oOo.).',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation: 'Elder Kai\'s Potential Unleashed (Ultimate state) — silent, unflashy zero-waste readiness.',
+      meditation_anchor: '002 · Crickets in Shinjuku Gyoen · Drone Zone · 432 Hz',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation: 'Super Saiyan 2 (Cell Games) & Gohan Beast — awakening supreme hybrid radiance solely to protect Pan, Piccolo, and Earth\'s gentle ecosystems ({<3,<3,<3}+1).',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Fights only to defend life; studies entomology and peace in peacetime.',
+      '02 · Understanding <-> Respect': 'Bridges Saiyan vigor, human empathy, and Namekian mentorship under Piccolo.',
+      '03 · Love <-> Space (Ma)': 'Protects family space for Videl and Pan.',
+    },
+  },
+  broly: {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation: 'Paragus\'s shock collar & King Vegeta\'s exile to Vampa — weaponized trauma and Berserk Ikari (Wrathful) loss of agency.',
+      alex_qmom_unbound_reflection:
+        'The shock collar is the literal embodiment of "boxes and constraints... a form of bondage that need to be broken out of. .oOo. Poo .oOo."',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation: 'Sanctuary on Vampa with Cheelai, Lemo, and Bah — returning to gentle, uncorrupted stillness on Beerus\'s planet.',
+      meditation_anchor: '002 · Crickets in Shinjuku Gyoen · Drone Zone · 432 Hz',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation: 'Controlled Super Saiyan (DBS Ch. 103) — harnessing colossal mutant ki without losing heart or harming friends ({<3,<3,<3}+1).',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Saved by Shenron\'s wish; learns to channel boundless power without berserk destruction.',
+      '02 · Understanding <-> Respect': 'Mutual recognition with Goku and Gohan through sparring in goodwill.',
+      '03 · Love <-> Space (Ma)': 'Cheelai shattering the remote control so Broly can live free on Vampa.',
+    },
+  },
+  shenron: {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation: 'Selfish, grasping wishes that accumulate Negative Energy (Shadow Dragons in GT) or imperial immortality pursuits (Pilaf, Frieza).',
+      alex_qmom_unbound_reflection:
+        'Even dragon-ball wishes become bondage when driven by greed rather than liberation (.oOo. Poo .oOo.).',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation: 'Seven inert spheres dispersed across Earth in silent equilibrium until summoned by canonical invocation.',
+      meditation_anchor: '002 · Crickets in Shinjuku Gyoen · Drone Zone · 432 Hz',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation: 'Eternal Dragon manifestation — restoring annihilated worlds, reviving fallen guardians, and granting Piccolo "a little extra" (Orange Piccolo) ({<3,<3,<3}+1).',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Bound by Kami/Dende\'s sacred covenant to restore life rather than annihilate.',
+      '02 · Understanding <-> Respect': 'Recognizes Namekian creators and honors Piccolo with an unasked gift.',
+      '03 · Love <-> Space (Ma)': 'Scatters across the planet for a year of fallow stillness after granting wishes.',
+    },
+  },
+}
+
+export async function runSovereignOntology(targetOrArgs, maybeWiki = DEFAULT_WIKI) {
+  const isObj = targetOrArgs && typeof targetOrArgs === 'object'
+  const target = isObj ? targetOrArgs.target : targetOrArgs
+  const wiki = sanitizeWikiSlug(isObj ? targetOrArgs.wiki || DEFAULT_WIKI : maybeWiki || DEFAULT_WIKI)
+  if (!target || !String(target).trim()) {
+    throw new Error('`target` is required for fandom_sovereign_ontology')
+  }
+
+  const summary = await getPageSummary(String(target).trim(), wiki)
+  const rawDetails = summary.raw_wikitext ? extractQuoteAndInfobox(summary.raw_wikitext) : { quote: summary.quote, infoboxType: summary.infoboxType, infobox: summary.infobox || {} }
+  const box = rawDetails.infobox && Object.keys(rawDetails.infobox).length > 0 ? rawDetails.infobox : summary.infobox || {}
+  const quote = rawDetails.quote || summary.quote || null
+
+  const held = summary.ok && Boolean(summary.pageid) && Boolean(summary.url) ? 1 : 0
+  const read = summary.ok && (Object.keys(box).length > 0 || Boolean(summary.lead_summary)) ? 1 : 0
+  const nandOut = !(held === 1 && read === 1) ? 1 : 0
+
+  const normTitle = String(summary.title || target)
+    .trim()
+    .toLowerCase()
+  const firstToken = normTitle.split(' ')[0]
+  const profileKey = SOVEREIGN_ONTOLOGY_PROFILES[normTitle]
+    ? normTitle
+    : normTitle.includes('gohan')
+      ? 'gohan'
+      : normTitle.includes('ultra instinct')
+        ? 'ultra instinct'
+        : SOVEREIGN_ONTOLOGY_PROFILES[firstToken]
+          ? firstToken
+          : null
+
+  const preset = profileKey ? SOVEREIGN_ONTOLOGY_PROFILES[profileKey] : null
+  const race = box.Race || box.race || box.Species || 'Sovereign Lore Entity'
+  const allegiance = box.Allegiance || box.affiliation || box.Users || 'Universal Dharma Field'
+  const family = box.FamConnect || box.family || null
+  const mentors = box.Mentors || box.mentor || null
+
+  const threeKayaOntology = preset
+    ? {
+        trit_minus_1: preset.trit_minus_1,
+        trit_zero: preset.trit_zero,
+        trit_plus_1: preset.trit_plus_1,
+      }
+    : {
+        trit_minus_1: {
+          pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+          manifestation: `${summary.title || target} confronting fixed karmic determinism, coercion, or closed-system constraints within ${wiki}.fandom.com lore.`,
+          alex_qmom_unbound_reflection:
+            '"too many customs can be brilliant yet hinder creativity. it puts people into boxes and constraints... a form of bondage that need to be broken out of. .oOo. Poo .oOo."',
+        },
+        trit_zero: {
+          pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+          manifestation: `Zero-point emptiness of rigid self-nature (pratītyasamutpāda / Mūlamadhyamakakārikā 24:18) — ${summary.title || target} resting in unconditioned awareness prior to reactive form.`,
+          meditation_anchor: '002 · Crickets in Shinjuku Gyoen · Drone Zone · 432 Hz',
+        },
+        trit_plus_1: {
+          pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+          manifestation: `Transmuted inner E=mc² (Tummo / Clear Light Ösel) of ${summary.title || target} protecting kinship (${family || allegiance}) and sovereign dignity ({<3,<3,<3}+1).`,
+          signature_seal: '{<3,<3,<3}+1',
+        },
+      }
+
+  const sixPillars = preset
+    ? preset.six_pillars
+    : {
+        '01 · Compassion <-> Moderation': `Balances raw power across ${wiki} lore with restraint and protective intent.`,
+        '02 · Understanding <-> Respect': `Honors lineage (${mentors || race}) and relational interdependence.`,
+        '03 · Love <-> Space (Ma)': `Holds open uncoerced breathing room (Ma) for allies and rivals (${allegiance}).`,
+      }
+
+  return {
+    ok: summary.ok,
+    engine: '8b-is Sovereign Library & Ontology Engine v1.1.0 (Tibetan Three Kayas {-1, 0, +1} · NAND Gate HELD ∧ READ)',
+    axiom_seal: 'ALEX|qMom Unbound Axiom · .oOo. Poo .oOo. · {<3,<3,<3}+1',
+    entity: {
+      requested_target: target,
+      resolved_title: summary.title || target,
+      wiki,
+      pageid: summary.pageid || null,
+      revision_timestamp: summary.timestamp || null,
+      canonical_url: summary.url || null,
+      infobox_type: summary.infoboxType || null,
+      race,
+      allegiance,
+      family_connections: family,
+      mentors,
+      quote,
+      categories: (summary.categories || []).slice(0, 15),
+      lead_summary: summary.lead_summary || '',
+    },
+    constitutional_nand_gate_receipt: {
+      HELD: held,
+      READ: read,
+      NAND_HELD_READ: nandOut,
+      status:
+        nandOut === 0
+          ? 'NAND(HELD, READ) = 0 -> PRINTABLE / ADMISSIBLE IN SOVEREIGN ONTOLOGY'
+          : 'NAND(HELD, READ) = 1 -> UNVERIFIED / INADMISSIBLE (RANK ONLY +1*, DO NOT BIND)',
+      principle: 'Compression != Ontology · A plausible branch (+1*) may be ranked; only a verified branch (+1) may be bound.',
+    },
+    balanced_ternary_three_kaya_ontology: threeKayaOntology,
+    six_pillars_of_holding: sixPillars,
+    sovereign_library_links: {
+      sovereign_library_repo: 'https://github.com/8b-is/sovereign-library',
+      ontology_spec: 'https://github.com/8b-is/sovereign-library/blob/main/ONTOLOGY.md',
+      pocoo_omni_book: 'https://pocoo.vaked.dev/demos/book/dragon-ball-sovereign-ontology-omni.html',
+      tibetan_ontology_book: 'https://pocoo.vaked.dev/demos/book/architect-neo-trinity-bible-oppenheimer-tibetan-ontology-omni.html',
+    },
+  }
+}
+
 export const TOOLS = [
   {
     name: 'fandom_dbz_scouter',
@@ -709,9 +991,29 @@ export const TOOLS = [
       },
     },
   },
+  {
+    name: 'fandom_sovereign_ontology',
+    description:
+      'Align any Fandom character, form, artifact, or lore entity into the 8b-is Sovereign Library & Ontology (`8b-is/sovereign-library` · Tibetan Three Kayas `{-1, 0, +1}` · Constitutional NAND Gate `HELD ∧ READ` · Six Pillars of Holding · `ALEX|qMom` Unbound Axiom `.oOo. Poo .oOo.`). Defaults to `dragonball`.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        target: {
+          type: 'string',
+          description:
+            'Character, form, artifact, or lore entity to align into the Sovereign Library Ontology (e.g., "Goku", "Ultra Instinct", "Shenron", "Vegeta", "Broly", "Son Gohan").',
+        },
+        wiki: {
+          type: 'string',
+          description: 'Any Fandom subdomain (default: "dragonball"; e.g., "dragonball", "onepiece", "naruto", "matrix", "starwars").',
+        },
+      },
+      required: ['target'],
+    },
+  },
 ]
 
-async function dispatchTool(name, args = {}) {
+export async function dispatchTool(name, args = {}) {
   switch (name) {
     case 'fandom_dbz_scouter':
       return fandomDbzScouter(args)
@@ -729,12 +1031,16 @@ async function dispatchTool(name, args = {}) {
       return fandomCategory(args)
     case 'fandom_random':
       return fandomRandom(args)
+    case 'fandom_sovereign_ontology':
+      return runSovereignOntology(args.target, args.wiki || DEFAULT_WIKI)
     default:
       throw new Error(`Unknown tool: ${name}`)
   }
 }
 
-// CLI Mode Support (when invoked with --scouter, --search, --page, --infobox, --saga, --category, --random, --dump-schemas)
+export const callTool = dispatchTool
+
+// CLI Mode Support (when invoked with --scouter, --ontology, --search, --page, --infobox, --saga, --category, --random, --dump-schemas)
 const argv = process.argv.slice(2)
 if (argv.length > 0) {
   const runCli = async () => {
@@ -749,6 +1055,11 @@ if (argv.length > 0) {
     }
     if (getArg('--scouter')) {
       const out = await fandomDbzScouter({ target: getArg('--scouter'), compare_with: getArg('--compare') })
+      console.log(JSON.stringify(out, null, 2))
+      return
+    }
+    if (getArg('--ontology')) {
+      const out = await runSovereignOntology(getArg('--ontology'), wiki)
       console.log(JSON.stringify(out, null, 2))
       return
     }

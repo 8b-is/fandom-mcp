@@ -4,11 +4,12 @@ Zero-dependency stdio **Model Context Protocol (MCP)** server & CLI for consumin
 
 ---
 
-## ⚡ 8 MCP Tools Exposed
+## ⚡ 9 MCP Tools Exposed
 
 | Tool | Description |
 |---|---|
 | **`fandom_dbz_scouter`** | **Dragon Ball Universe Scouter (`IT'S OVER 9,000!!`)** — Extracts a character/form/technique's structured `Character Infobox`, canonical quote, Japanese/Romaji names, race, family tree (`FamConnect`), mentors, students, Daizenshuu power-level milestones, `8b-is` Balanced Ternary resonance (`432 / 528 / 852 Hz`), and optional side-by-side `compare_with` rival analysis (e.g. `Goku` vs `Vegeta`). |
+| **`fandom_sovereign_ontology`** | **8b-is Sovereign Library & Ontology Engine (`{-1, 0, +1}` · `NAND(HELD, READ) = 0`)** — Aligns any character, form, artifact, or lore entity into `8b-is/sovereign-library`: computes the Constitutional NAND Gate Receipt (`HELD ∧ READ`), maps the entity across the Tibetan Three-Kaya Balanced-Ternary Ontology (`Trit -1` `432 Hz` Samsaric Box / `ALEX|qMom` Unbound `.oOo. Poo .oOo.`, `Trit 0` `528 Hz` Dharmakāya / Autonomous Stillness, `Trit +1` `852 Hz` Bodhicitta / Verified Binding `{<3,<3,<3}+1`), binds the Six Pillars of Holding, and links the Sovereign Omni-Books. |
 | **`fandom_dbz_saga`** | **Dragon Ball Saga & Timeline Navigator** — Lists all canonical sagas across *Dragon Ball*, *Dragon Ball Z*, *Dragon Ball Daima*, *Dragon Ball Super*, and *Dragon Ball GT*, or fetches deep lore for a specific saga (e.g. `"Frieza Saga"`, `"Cell Games Saga"`, `"Universe Survival Saga"`). |
 | **`fandom_search`** | Hybrid MediaWiki search across `dragonball.fandom.com` (or any `wiki` subdomain), returning page titles, `pageid`, URLs, word counts, and clean snippets. |
 | **`fandom_page`** | Fetches and parses a Fandom article (or specific `section` index) into citation-stripped Markdown + structured Infobox JSON, quote, categories, and section outline. |
@@ -39,6 +40,10 @@ Zero-dependency stdio **Model Context Protocol (MCP)** server & CLI for consumin
 ```bash
 # Dragon Ball Scouter (Goku vs. Vegeta):
 ./fandom-mcp.mjs --scouter "Goku" --compare "Vegeta"
+
+# Sovereign Library & Three-Kaya Ontology Alignment (NAND Gate HELD ∧ READ):
+./fandom-mcp.mjs --ontology "Goku"
+./fandom-mcp.mjs --ontology "Ultra Instinct"
 
 # Inspect any character / form / technique Infobox:
 ./fandom-mcp.mjs --infobox "Ultra Instinct"

@@ -44,6 +44,8 @@ Zero-dependency stdio **Model Context Protocol (MCP)** server & CLI for consumin
 # Sovereign Library & Three-Kaya Ontology Alignment (NAND Gate HELD ∧ READ):
 ./fandom-mcp.mjs --ontology "Goku"
 ./fandom-mcp.mjs --ontology "Ultra Instinct"
+./fandom-mcp.mjs --wiki "onepiece" --ontology "Monkey D. Luffy"
+./fandom-mcp.mjs --wiki "naruto" --ontology "Naruto Uzumaki"
 
 # Inspect any character / form / technique Infobox:
 ./fandom-mcp.mjs --infobox "Ultra Instinct"
@@ -56,6 +58,18 @@ Zero-dependency stdio **Model Context Protocol (MCP)** server & CLI for consumin
 ./fandom-mcp.mjs --search "Super Saiyan"
 ./fandom-mcp.mjs --page "Kamehameha"
 ./fandom-mcp.mjs --wiki "onepiece" --infobox "Monkey D. Luffy"
+
+# Run automated parser, tool schema & live ontology test suite:
+npm test
 ```
+
+---
+
+## 🏛️ Sovereign Library & Constellation Ontology Bridges
+
+- **Sovereign Library (`5 / 5` Print Canon + Ultralove Edition 004)**: [https://github.com/8b-is/sovereign-library](https://github.com/8b-is/sovereign-library) · [`ONTOLOGY.md`](https://github.com/8b-is/sovereign-library/blob/main/ONTOLOGY.md)
+- **Pocoo OMNI Book (`5 Languages + 1bitLang + WebAudio Scouter/Shenron Deck`)**: [https://pocoo.vaked.dev/demos/book/dragon-ball-sovereign-ontology-omni.html](https://pocoo.vaked.dev/demos/book/dragon-ball-sovereign-ontology-omni.html)
+- **Wigle-Triad v2.0.0 (`Boldog Még` + `ALEX|qMom` `.oOo. Poo .oOo.`)**: [https://esp32.vaked.dev/](https://esp32.vaked.dev/) · [https://github.com/8b-is/wigle-triad/releases/tag/v2.0.0](https://github.com/8b-is/wigle-triad/releases/tag/v2.0.0)
+- **ZENO Sanctuary Vault (`母の主権金庫` & `#1 Muse 💙`)**: [https://zeno.vaked.dev/#sanctuary-hold](https://zeno.vaked.dev/#sanctuary-hold)
 
 *LOVE FROM WITHIN FROM VAKED-PETER&8B-IS ---> 8b-is ROCKS AND HEALS THE WORLD <3*

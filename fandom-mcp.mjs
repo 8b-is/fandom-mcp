@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// fandom-mcp.mjs — 8b-is Fandom Wiki Consumption MCP Server v1.0.0
+// fandom-mcp.mjs — 8b-is Fandom Wiki Consumption MCP Server
 // Default Universe: Dragon Ball Universe (https://dragonball.fandom.com)
 // Supports ANY Fandom wiki subdomain (dragonball, onepiece, naruto, bleach, starwars, lotr, warhammer40k, ...)
 //
@@ -8,11 +8,13 @@
 
 import { fetchJson as fetchBoundedJson } from './http-json.mjs'
 import readline from 'node:readline'
-import { realpathSync } from 'node:fs'
+import { readFileSync, realpathSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
+const { version: VERSION } = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'))
+
 const DEFAULT_WIKI = process.env.FANDOM_DEFAULT_WIKI || 'dragonball'
-const USER_AGENT = '8b-is-fandom-mcp/1.0.0 (+https://github.com/8b-is/fandom-mcp; DragonBallScouter)'
+const USER_AGENT = `8b-is-fandom-mcp/${VERSION} (+https://github.com/8b-is/fandom-mcp; DragonBallScouter)`
 
 // Canonical Daizenshuu / Super Exciting Guide Power Level Milestones for the DBZ Scouter
 const CANON_SCOUTER_BENCHMARKS = {
@@ -800,7 +802,7 @@ export async function runSovereignOntology(targetOrArgs, maybeWiki = DEFAULT_WIK
 
   return {
     ok: summary.ok,
-    engine: '8b-is Sovereign Library & Ontology Engine v1.1.0 (Tibetan Three Kayas {-1, 0, +1} · NAND Gate HELD ∧ READ)',
+    engine: `8b-is Sovereign Library & Ontology Engine v${VERSION} (Tibetan Three Kayas {-1, 0, +1} · NAND Gate HELD ∧ READ)`,
     axiom_seal: 'ALEX|qMom Unbound Axiom · .oOo. Poo .oOo. · {<3,<3,<3}+1',
     entity: {
       requested_target: target,
@@ -1156,7 +1158,7 @@ if (isMainModule && argv.length > 0) {
         capabilities: { tools: {} },
         serverInfo: {
           name: 'fandom-mcp',
-          version: '1.0.0',
+          version: VERSION,
         },
       })
       return

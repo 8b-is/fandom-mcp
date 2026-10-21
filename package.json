@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node fandom-mcp.mjs",
-    "test": "node --test test.mjs test-stdio.mjs",
+    "test": "node --test test.mjs test-stdio.mjs test-http.mjs",
     "test:live": "node --test test-live.mjs",
     "scouter": "node fandom-mcp.mjs --scouter Goku --compare Vegeta",
     "ontology": "node fandom-mcp.mjs --ontology Goku"

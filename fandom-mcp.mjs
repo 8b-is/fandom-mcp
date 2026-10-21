@@ -6,7 +6,7 @@
 // Zero external dependencies. Speaks JSON-RPC 2.0 over stdio for agy, Claude Code, Crush, and opencode,
 // plus direct CLI flags (--scouter, --ontology, --page, --infobox, --search, --saga, --category, --random).
 
-import https from 'node:https'
+import { fetchJson as fetchBoundedJson } from './http-json.mjs'
 import readline from 'node:readline'
 import { realpathSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
@@ -72,37 +72,8 @@ function sanitizeWikiSlug(wiki) {
 }
 
 function fetchJson(url) {
-  return new Promise((resolve, reject) => {
-    const req = https.get(
-      url,
-      {
-        headers: {
-          'User-Agent': USER_AGENT,
-          Accept: 'application/json',
-        },
-        timeout: 15000,
-      },
-      (res) => {
-        if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-          fetchJson(res.headers.location).then(resolve, reject)
-          return
-        }
-        const chunks = []
-        res.on('data', (c) => chunks.push(c))
-        res.on('end', () => {
-          const raw = Buffer.concat(chunks).toString('utf8')
-          try {
-            resolve(JSON.parse(raw))
-          } catch (e) {
-            reject(new Error(`Invalid JSON from ${url}: ${raw.slice(0, 180)}`))
-          }
-        })
-      },
-    )
-    req.on('error', reject)
-    req.on('timeout', () => {
-      req.destroy(new Error(`Timeout fetching ${url}`))
-    })
+  return fetchBoundedJson(url, {
+    headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' },
   })
 }
 

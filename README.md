@@ -68,6 +68,13 @@ npm run test:live
 
 ---
 
+## Network response limits
+
+Each JSON request allows at most three HTTPS redirects, a 4 MiB response body,
+and 15 seconds total across connection setup, redirects, and body reading.
+Relative redirects are supported. Oversized, interrupted, invalid-JSON, or
+non-success HTTP responses fail explicitly instead of being read indefinitely.
+
 ## 🏛️ Sovereign Library & Constellation Ontology Bridges
 
 - **Sovereign Library (`5 / 5` Print Canon + Ultralove Edition 004)**: [https://github.com/8b-is/sovereign-library](https://github.com/8b-is/sovereign-library) · [`ONTOLOGY.md`](https://github.com/8b-is/sovereign-library/blob/main/ONTOLOGY.md)

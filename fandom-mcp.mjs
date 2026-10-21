@@ -8,6 +8,8 @@
 
 import https from 'node:https'
 import readline from 'node:readline'
+import { realpathSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 
 const DEFAULT_WIKI = process.env.FANDOM_DEFAULT_WIKI || 'dragonball'
 const USER_AGENT = '8b-is-fandom-mcp/1.0.0 (+https://github.com/8b-is/fandom-mcp; DragonBallScouter)'
@@ -1083,8 +1085,17 @@ export async function dispatchTool(name, args = {}) {
 export const callTool = dispatchTool
 
 // CLI Mode Support (when invoked with --scouter, --ontology, --search, --page, --infobox, --saga, --category, --random, --dump-schemas)
+// Resolve npm's bin symlink as well as direct invocations. Imports stay inert.
+const isMainModule = (() => {
+  if (!process.argv[1]) return false
+  try {
+    return realpathSync(process.argv[1]) === fileURLToPath(import.meta.url)
+  } catch {
+    return false
+  }
+})()
 const argv = process.argv.slice(2)
-if (argv.length > 0) {
+if (isMainModule && argv.length > 0) {
   const runCli = async () => {
     const getArg = (flag) => {
       const idx = argv.indexOf(flag)
@@ -1140,7 +1151,7 @@ if (argv.length > 0) {
     console.error(err)
     process.exit(1)
   })
-} else {
+} else if (isMainModule) {
   // Stdio JSON-RPC 2.0 MCP Server Loop
   function reply(id, result) {
     process.stdout.write(JSON.stringify({ jsonrpc: '2.0', id, result }) + '\n')
@@ -1158,6 +1169,11 @@ if (argv.length > 0) {
     try {
       msg = JSON.parse(trimmed)
     } catch {
+      replyErr(null, -32700, 'Parse error')
+      return
+    }
+    if (msg === null || typeof msg !== 'object' || Array.isArray(msg)) {
+      replyErr(null, -32600, 'Invalid Request')
       return
     }
     const { id, method, params } = msg

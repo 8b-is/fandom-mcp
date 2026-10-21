@@ -59,8 +59,11 @@ Zero-dependency stdio **Model Context Protocol (MCP)** server & CLI for consumin
 ./fandom-mcp.mjs --page "Kamehameha"
 ./fandom-mcp.mjs --wiki "onepiece" --infobox "Monkey D. Luffy"
 
-# Run automated parser, tool schema & live ontology test suite:
+# Run offline parser, tool schema, and stdio lifecycle tests:
 npm test
+
+# Opt in to the live Fandom ontology integration test (requires network):
+npm run test:live
 ```
 
 ---

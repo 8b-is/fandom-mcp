@@ -73,6 +73,27 @@ function sanitizeWikiSlug(wiki) {
   return cleaned || DEFAULT_WIKI
 }
 
+export function parseFandomInput(rawInput, fallbackWiki = DEFAULT_WIKI) {
+  const s = String(rawInput || '').trim()
+  const urlMatch = s.match(/^https?:\/\/([a-z0-9-_]+)\.fandom\.com\/(?:[a-z]{2}\/)?wiki\/([^\s?#]+)/i)
+  if (urlMatch) {
+    let decoded = urlMatch[2]
+    try {
+      decoded = decodeURIComponent(decoded)
+    } catch {
+      // keep raw if malformed percent encoding
+    }
+    return {
+      wiki: sanitizeWikiSlug(urlMatch[1]),
+      title: decoded.replace(/_/g, ' ').trim(),
+    }
+  }
+  return {
+    wiki: sanitizeWikiSlug(fallbackWiki),
+    title: s,
+  }
+}
+
 function fetchJson(url) {
   return fetchBoundedJson(url, {
     headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' },
@@ -131,8 +152,9 @@ export function extractQuoteAndInfobox(wikitext) {
   }
   if (!wikitext) return result
 
-  // Extract {{Quote|text|speaker}} (resolve [[Target|Label]] links before splitting on |)
+  // Extract {{Quote|text|speaker}} or {{#SQuote:|text=...|speaker=...|attribution=...}}
   const quoteMatch = wikitext.match(/\{\{Quote\|([\s\S]*?)\}\}/i)
+  const sQuoteMatch = wikitext.match(/\{\{#SQuote:\|([\s\S]*?)\}\}/i)
   if (quoteMatch) {
     const precleaned = quoteMatch[1]
       .replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2')
@@ -144,10 +166,32 @@ export function extractQuoteAndInfobox(wikitext) {
         attribution: parts[1] || null,
       }
     }
+  } else if (sQuoteMatch) {
+    const precleaned = sQuoteMatch[1]
+      .replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, '$2')
+      .replace(/\[\[([^\]]+)\]\]/g, '$1')
+    const kv = {}
+    for (const seg of precleaned.split('|')) {
+      const eq = seg.indexOf('=')
+      if (eq !== -1) {
+        const k = seg.slice(0, eq).trim().toLowerCase()
+        const v = stripWikitextMarkup(seg.slice(eq + 1))
+        if (k && v) kv[k] = v
+      }
+    }
+    if (kv.text) {
+      const attrParts = [kv.speaker, kv.attribution, kv.source].filter(Boolean)
+      result.quote = {
+        text: kv.text,
+        attribution: attrParts.length > 0 ? attrParts.join(' · ') : null,
+      }
+    }
   }
 
-  // Find first Infobox or Character/Attack/Saga template block using brace depth
-  const startMatch = wikitext.match(/\{\{([A-Za-z0-9 _-]*Infobox|Character|Attack|Saga|Form|Race|Location|Item)\b/i)
+  // Find first Infobox or Character/Attack/Saga/Hungarian template block using brace depth
+  const startMatch = wikitext.match(
+    /\{\{([A-Za-z0-9 _-]*Infobox|Character|Attack|Saga|Form|Race|Location|Item|Organization|Family|Karakter|Szervezetek|Család|Bolygó|Faj|Esemény|Könyv|Hajó|Helyszín|Tárgy)\b/i,
+  )
   if (!startMatch || startMatch.index === undefined) return result
 
   result.infoboxType = startMatch[1].trim()
@@ -253,16 +297,18 @@ async function fandomSearch({ query, wiki = DEFAULT_WIKI, limit = 10 }) {
 }
 
 async function fandomSections({ title, wiki = DEFAULT_WIKI }) {
-  const slug = sanitizeWikiSlug(wiki)
+  const parsedIn = parseFandomInput(title, wiki)
+  const slug = parsedIn.wiki
+  const cleanTitle = parsedIn.title
   const data = await fetchJson(
     apiUrl(slug, {
       action: 'parse',
-      page: String(title || '').trim(),
+      page: cleanTitle,
       prop: 'sections|categories',
     }),
   )
   if (data?.error) {
-    throw new Error(data.error.info || `Page not found: ${title}`)
+    throw new Error(data.error.info || `Page not found: ${cleanTitle}`)
   }
   const p = data.parse
   return {
@@ -283,14 +329,16 @@ async function fandomSections({ title, wiki = DEFAULT_WIKI }) {
 }
 
 async function fandomPage({ title, wiki = DEFAULT_WIKI, section = 0, max_chars = 8000, include_wikitext = false }) {
-  const slug = sanitizeWikiSlug(wiki)
+  const parsedIn = parseFandomInput(title, wiki)
+  const slug = parsedIn.wiki
+  const cleanTitle = parsedIn.title
   const secParams = section !== undefined && section !== null && section !== 'all' ? { rvsection: String(section) } : {}
   const [revData, secData] = await Promise.all([
     fetchJson(
       apiUrl(slug, {
         action: 'query',
         prop: 'revisions|categories',
-        titles: String(title || '').trim(),
+        titles: cleanTitle,
         rvprop: 'content|timestamp',
         rvslots: 'main',
         cllimit: '30',
@@ -301,7 +349,7 @@ async function fandomPage({ title, wiki = DEFAULT_WIKI, section = 0, max_chars =
       ? fetchJson(
           apiUrl(slug, {
             action: 'parse',
-            page: String(title || '').trim(),
+            page: cleanTitle,
             prop: 'sections',
           }),
         ).catch(() => null)
@@ -311,10 +359,10 @@ async function fandomPage({ title, wiki = DEFAULT_WIKI, section = 0, max_chars =
   const page = revData?.query?.pages?.[0]
   if (!page || page.missing) {
     // Fallback to search suggestion if exact title missed
-    const fallback = await fandomSearch({ query: title, wiki: slug, limit: 5 })
+    const fallback = await fandomSearch({ query: cleanTitle, wiki: slug, limit: 5 })
     return {
       ok: false,
-      error: `Exact page "${title}" not found on ${slug}.fandom.com`,
+      error: `Exact page "${cleanTitle}" not found on ${slug}.fandom.com`,
       suggestions: fallback.results,
     }
   }
@@ -732,17 +780,99 @@ const SOVEREIGN_ONTOLOGY_PROFILES = {
       '03 · Love <-> Space (Ma)': 'Waits patiently for Sasuke at the Valley of the End until both arms drop the sword.',
     },
   },
+  'brett shaw': {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation:
+        'Imperial etiquette cages, El-Nath star-detonation court-martial, 70% trans-dimensional cybernetic replacement, and the horror of the Pearl of Roxolán (Roxoláni Gyöngyszem) where collateral slaughter threatens to reduce a soldier into a soulless weapon.',
+      alex_qmom_unbound_reflection:
+        'Brett "fittyet hány sok etikettre, kivéve azokat amelyeknek betartását maga is fontosnak gondolja" — breaking out of rigid imperial protocol: "too many customs can be brilliant yet hinder creativity. it puts people into boxes and constraints... a form of bondage that need to be broken out of. .oOo. Poo .oOo."',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation:
+        'Standing on Tipheret (6th Sephirah · Beauty / Heart / Zero-Point Equilibrium on the Tree of Life, 2669) — walking away from the Praetorian Guard at 39 (2673) into unconditioned stillness ("Not just a playlist — a space between thoughts") before boarding the Bolygórózsa (Planet Rose).',
+      meditation_anchor:
+        'https://youtu.be/bSYE6wTDM_Y?list=RDbSYE6wTDM_Y · Not Quite Rock: Psychedelic Desert Rock | Ambient & Chillout Mix for Cosmic Flow (Trance Soil -> Moontrace -> Whisper Loop -> Lucid Dune -> Deep Again) · 002 · Crickets in Shinjuku Gyoen · 432 Hz -> 528 Hz Tipheret Center',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation:
+        'Human–Megaira dragon-son (ember + megaira · illegitimate son of IV. von Anstetten, half-brother to Princess Caroline-Blindamoor) saving Caroline & Gwandolyn between Earth and Mars, keeping his human conscience alive alongside Wittgen, Carla, and Tubs ({<3,<3,<3}+1).',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Refuses to become an unfeeling killer; remorse over the Roxoláni Gyöngyszem proves his humanity endures beneath the Black Hood.',
+      '02 · Understanding <-> Respect': 'Lifelong brotherhood with Wittgen (who saved his life at IMC) and unfiltered truth-telling with Tubs.',
+      '03 · Love <-> Space (Ma)': 'Leaves the Imperial Palace behind to serve aboard the Bolygórózsa for Carla, protecting his sister Caroline-Blindamoor without power-grasping.',
+    },
+  },
+  feketecsuklyások: {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation:
+        '"Palackba zárt végítélet" (Pusztai Magor, 2572) — the lethal trial before the beryllium-agate throne\'s emotional battle-octahedrons (harci oktaéderek), the spiritual fog that seals the adept\'s conscious mind after initiation, and the risk of becoming a hollow vessel via the csuklyamodul (Hood Module).',
+      alex_qmom_unbound_reflection:
+        'The closed-door spiritual fog vs. true sovereign awakening: "what might seem as beautiful or useful at first glance could actually be a form of bondage that need to be broken out of. .oOo. Poo .oOo."',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation:
+        'The 100-strong invariant circle (since 2552) ascending the 7–8 Sephirotic steps in silent 1-on-1 transmission with the Emperor, where no two soldiers carry standardized gear and non-local resonance bridges hundreds of thousands of light-years.',
+      meditation_anchor: '002 · Crickets in Shinjuku Gyoen · Drone Zone · 432 Hz',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation:
+        'Occult Imperial Guard (Okkult császári testőrség) — mentally-directed nanobot blood and black-material-shielded vertebrae transmuted from "doomsday in a bottle" into the Dharma-Protector (Mahākāla / Bernagchen Black Cloak) shield of the von Anstetten lineage ({<3,<3,<3}+1).',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Bottled cataclysm held under strict sovereign discipline across 100,000+ light-years.',
+      '02 · Understanding <-> Respect': 'Direct 1-on-1 Sephirotic initiation (no classrooms, no standardized assembly-line cloning).',
+      '03 · Love <-> Space (Ma)': 'Non-standardized individuality within the 100-member order, honoring each soldier\'s distinct path.',
+    },
+  },
+  'anstetten-család': {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation:
+        'The early Dominate (Dominátus) of I. and II. von Anstetten (post-2405) — tyrannical suppression of all esoteric/magical knowledge, the bloody Turanian Republic war, and the fratricidal Arturus civil war under III. von Anstetten.',
+      alex_qmom_unbound_reflection:
+        'Banning esoteric knowledge and ruling by closed-box tyranny always fractures from within (.oOo. Poo .oOo.).',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation:
+        'Hidden Megaira dragon-nature (megaira sárkánycsalád) — centuries-long longevity (Empress Kyrie bearing children past 100+) and the pivot from imperial domination toward quiet equilibrium.',
+      meditation_anchor: '002 · Crickets in Shinjuku Gyoen · Drone Zone · 432 Hz',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation:
+        'IV. von Anstetten\'s era of internal peace, reconciliation and joint alliance with the Turanian Kingdom (Turáni királyság), and the dragon-kinship bond linking IV. von Anstetten, Gwandolyn, Caroline-Blindamoor (V. von Anstetten), and Brett Shaw ({<3,<3,<3}+1 · 💙🐉✨).',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Evolution from the harsh Dominate of I–II. von Anstetten to the peaceful reign of IV. von Anstetten.',
+      '02 · Understanding <-> Respect': 'Historic reconciliation and alliance between the Imperium and the Turanian Kingdom.',
+      '03 · Love <-> Space (Ma)': 'IV. von Anstetten quietly shielding his illegitimate son Brett Shaw (El-Nath pardon) alongside his daughters Gwandolyn and Caroline-Blindamoor.',
+    },
+  },
 }
 
 export async function runSovereignOntology(targetOrArgs, maybeWiki = DEFAULT_WIKI) {
   const isObj = targetOrArgs && typeof targetOrArgs === 'object'
-  const target = isObj ? targetOrArgs.target : targetOrArgs
-  const wiki = sanitizeWikiSlug(isObj ? targetOrArgs.wiki || DEFAULT_WIKI : maybeWiki || DEFAULT_WIKI)
-  if (!target || !String(target).trim()) {
+  const rawTarget = isObj ? targetOrArgs.target : targetOrArgs
+  const rawWiki = isObj ? targetOrArgs.wiki || DEFAULT_WIKI : maybeWiki || DEFAULT_WIKI
+  if (!rawTarget || !String(rawTarget).trim()) {
     throw new Error('`target` is required for fandom_sovereign_ontology')
   }
+  const parsedIn = parseFandomInput(rawTarget, rawWiki)
+  const target = parsedIn.title
+  const wiki = parsedIn.wiki
 
-  const summary = await getPageSummary(String(target).trim(), wiki)
+  const summary = await getPageSummary(target, wiki)
   const rawDetails = summary.raw_wikitext ? extractQuoteAndInfobox(summary.raw_wikitext) : { quote: summary.quote, infoboxType: summary.infoboxType, infobox: summary.infobox || {} }
   const box = rawDetails.infobox && Object.keys(rawDetails.infobox).length > 0 ? rawDetails.infobox : summary.infobox || {}
   const quote = rawDetails.quote || summary.quote || null
@@ -762,10 +892,21 @@ export async function runSovereignOntology(targetOrArgs, maybeWiki = DEFAULT_WIK
       : Object.keys(SOVEREIGN_ONTOLOGY_PROFILES).find((k) => normTitle.includes(k)) || null
 
   const preset = profileKey ? SOVEREIGN_ONTOLOGY_PROFILES[profileKey] : null
-  const race = box.Race || box.race || box.Species || 'Sovereign Lore Entity'
-  const allegiance = box.Allegiance || box.affiliation || box.Users || 'Universal Dharma Field'
-  const family = box.FamConnect || box.family || null
-  const mentors = box.Mentors || box.mentor || null
+  const cleanField = (val) => (val ? String(val).replace(/^\*\s*/gm, '').replace(/\n+/g, ', ').trim() : null)
+  const race =
+    cleanField(box.Race || box.race || box.Species || box.faj) ||
+    (normTitle === 'anstetten-család' ? 'megaira (sárkánycsalád)' : 'Sovereign Lore Entity')
+  const allegiance =
+    cleanField(box.Allegiance || box.affiliation || box.Users || box.politikai_hovatartozás || box.foglalkozás) ||
+    'Universal Dharma Field'
+  const family =
+    cleanField(box.FamConnect || box.family || box.család) ||
+    (normTitle === 'brett shaw'
+      ? 'IV. von Anstetten (father), Caroline-Blindamoor / V. von Anstetten (half-sister), Gwandolyn von Anstetten (half-sister)'
+      : normTitle === 'anstetten-család'
+        ? 'I–V. von Anstetten, Kyrie császárné, Fatime, Franz Vorham, Tiberius, Gwandolyn, Caroline-Blindamoor, Brett Shaw'
+        : null)
+  const mentors = cleanField(box.Mentors || box.mentor) || null
 
   const threeKayaOntology = preset
     ? {

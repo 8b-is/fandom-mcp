@@ -1,6 +1,6 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
-import { extractQuoteAndInfobox, TOOLS } from './fandom-mcp.mjs'
+import { extractQuoteAndInfobox, parseFandomInput, TOOLS, runSovereignOntology } from './fandom-mcp.mjs'
 
 test('extractQuoteAndInfobox resolves nested [[Target|Label]] pipes inside {{Quote|...}} and parses brace-depth infoboxes', () => {
   const sampleWikitext = `
@@ -30,6 +30,21 @@ test('extractQuoteAndInfobox resolves nested [[Target|Label]] pipes inside {{Quo
   assert.match(parsed.infobox.FamConnect, /Bardock/)
 })
 
+test('parseFandomInput and extractQuoteAndInfobox parse Hungarian Mysterious Universe templates ({{Karakter}}, {{Szervezetek}}, {{#SQuote:}})', () => {
+  const urlParsed = parseFandomInput('https://mysterious-universe.fandom.com/wiki/Feketecsukly%C3%A1sok')
+  assert.equal(urlParsed.wiki, 'mysterious-universe')
+  assert.equal(urlParsed.title, 'Feketecsuklyások')
+
+  const muWikitext = `{{Szervezetek|politikai_hovatartozás=Birodalom|hol_tűnik_fel=*[[Ópiumkeringő]]}}
+{{#SQuote:|text=Palackba zárt végítélet|speaker=[[Pusztai Magor]]|receiver=|attribution=[[2572]]|source=|id=2UDP-PVSL-6Y30|template=}}`
+  const parsed = extractQuoteAndInfobox(muWikitext)
+  assert.equal(parsed.infoboxType, 'Szervezetek')
+  assert.equal(parsed.infobox.politikai_hovatartozás, 'Birodalom')
+  assert.ok(parsed.quote)
+  assert.equal(parsed.quote.text, 'Palackba zárt végítélet')
+  assert.equal(parsed.quote.attribution, 'Pusztai Magor · 2572')
+})
+
 test('TOOLS exposes all 9 Fandom & Sovereign Ontology MCP tools', () => {
   assert.equal(TOOLS.length, 9)
   const names = TOOLS.map((t) => t.name)
@@ -44,4 +59,44 @@ test('TOOLS exposes all 9 Fandom & Sovereign Ontology MCP tools', () => {
     'fandom_random',
     'fandom_sovereign_ontology',
   ])
+})
+
+test('runSovereignOntology aligns Goku (dragonball) & Monkey D. Luffy (onepiece) with NAND(1,1)=0 receipt', async () => {
+  const goku = await runSovereignOntology('Goku', 'dragonball')
+  assert.equal(goku.ok, true)
+  assert.equal(goku.entity.resolved_title, 'Goku')
+  assert.equal(goku.constitutional_nand_gate_receipt.HELD, 1)
+  assert.equal(goku.constitutional_nand_gate_receipt.READ, 1)
+  assert.equal(goku.constitutional_nand_gate_receipt.NAND_HELD_READ, 0)
+  assert.match(goku.balanced_ternary_three_kaya_ontology.trit_zero.manifestation, /Ultra Instinct/)
+  assert.equal(goku.balanced_ternary_three_kaya_ontology.trit_plus_1.signature_seal, '{<3,<3,<3}+1')
+
+  const luffy = await runSovereignOntology('Monkey D. Luffy', 'onepiece')
+  assert.equal(luffy.ok, true)
+  assert.equal(luffy.constitutional_nand_gate_receipt.NAND_HELD_READ, 0)
+  assert.match(luffy.balanced_ternary_three_kaya_ontology.trit_plus_1.manifestation, /Gear 5/)
+})
+
+test('runSovereignOntology aligns Mysterious Universe triad (Brett Shaw +++ Feketecsuklyások +++ Anstetten-család) via direct URLs', async () => {
+  const shaw = await runSovereignOntology('https://mysterious-universe.fandom.com/wiki/Brett_Shaw')
+  assert.equal(shaw.ok, true)
+  assert.equal(shaw.entity.wiki, 'mysterious-universe')
+  assert.equal(shaw.entity.resolved_title, 'Brett Shaw')
+  assert.equal(shaw.entity.infobox_type, 'Karakter')
+  assert.match(shaw.entity.race, /megaira/)
+  assert.equal(shaw.constitutional_nand_gate_receipt.NAND_HELD_READ, 0)
+  assert.match(shaw.balanced_ternary_three_kaya_ontology.trit_zero.manifestation, /Tipheret/)
+
+  const hoods = await runSovereignOntology('https://mysterious-universe.fandom.com/wiki/Feketecsukly%C3%A1sok')
+  assert.equal(hoods.ok, true)
+  assert.equal(hoods.entity.resolved_title, 'Feketecsuklyások')
+  assert.equal(hoods.entity.infobox_type, 'Szervezetek')
+  assert.equal(hoods.entity.quote?.text, 'Palackba zárt végítélet')
+  assert.equal(hoods.constitutional_nand_gate_receipt.NAND_HELD_READ, 0)
+
+  const anstetten = await runSovereignOntology('https://mysterious-universe.fandom.com/wiki/Anstetten-csal%C3%A1d')
+  assert.equal(anstetten.ok, true)
+  assert.equal(anstetten.entity.resolved_title, 'Anstetten-család')
+  assert.match(anstetten.entity.race, /megaira/)
+  assert.equal(anstetten.constitutional_nand_gate_receipt.NAND_HELD_READ, 0)
 })

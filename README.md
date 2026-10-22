@@ -47,6 +47,11 @@ Zero-dependency stdio **Model Context Protocol (MCP)** server & CLI for consumin
 ./fandom-mcp.mjs --wiki "onepiece" --ontology "Monkey D. Luffy"
 ./fandom-mcp.mjs --wiki "naruto" --ontology "Naruto Uzumaki"
 
+# Mysterious Universe (Hungarian Sci-Fi / Occult Imperium) Triad — Direct URL or Title:
+./fandom-mcp.mjs --ontology "https://mysterious-universe.fandom.com/wiki/Brett_Shaw"
+./fandom-mcp.mjs --ontology "https://mysterious-universe.fandom.com/wiki/Feketecsukly%C3%A1sok"
+./fandom-mcp.mjs --ontology "https://mysterious-universe.fandom.com/wiki/Anstetten-csal%C3%A1d"
+
 # Inspect any character / form / technique Infobox:
 ./fandom-mcp.mjs --infobox "Ultra Instinct"
 ./fandom-mcp.mjs --infobox "Shenron"

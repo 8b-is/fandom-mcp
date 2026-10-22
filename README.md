@@ -47,10 +47,12 @@ Zero-dependency stdio **Model Context Protocol (MCP)** server & CLI for consumin
 ./fandom-mcp.mjs --wiki "onepiece" --ontology "Monkey D. Luffy"
 ./fandom-mcp.mjs --wiki "naruto" --ontology "Naruto Uzumaki"
 
-# Mysterious Universe (Hungarian Sci-Fi / Occult Imperium) Triad — Direct URL or Title:
-./fandom-mcp.mjs --ontology "https://mysterious-universe.fandom.com/wiki/Brett_Shaw"
-./fandom-mcp.mjs --ontology "https://mysterious-universe.fandom.com/wiki/Feketecsukly%C3%A1sok"
-./fandom-mcp.mjs --ontology "https://mysterious-universe.fandom.com/wiki/Anstetten-csal%C3%A1d"
+# Mysterious Universe (Hungarian Sci-Fi / Occult Imperium) Triad — Direct URL, Title, or +++ Triad Synthesis:
+./fandom-mcp.mjs --ontology "https://mysterious-universe.fandom.com/wiki/Brett_Shaw +++ https://mysterious-universe.fandom.com/wiki/Feketecsukly%C3%A1sok +++ https://mysterious-universe.fandom.com/wiki/Anstetten-csal%C3%A1d"
+./fandom-mcp.mjs --wiki "mysterious-universe" --ontology "Megaira"
+./fandom-mcp.mjs --wiki "mysterious-universe" --ontology "Csuklyamodul"
+./fandom-mcp.mjs --wiki "mysterious-universe" --ontology "Caroline-Blindamoor von Anstetten"
+./fandom-mcp.mjs --wiki "mysterious-universe" --ontology "IV. von Anstetten"
 
 # Inspect any character / form / technique Infobox:
 ./fandom-mcp.mjs --infobox "Ultra Instinct"

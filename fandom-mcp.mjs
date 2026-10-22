@@ -859,6 +859,182 @@ const SOVEREIGN_ONTOLOGY_PROFILES = {
       '03 · Love <-> Space (Ma)': 'IV. von Anstetten quietly shielding his illegitimate son Brett Shaw (El-Nath pardon) alongside his daughters Gwandolyn and Caroline-Blindamoor.',
     },
   },
+  megaira: {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation:
+        'Cataclysmic loss of the Green Planet (Zöld bolygó) in the Solar System, hierarchical age/magic caste stratification, and the risk of splitting the human vessel apart when summoning the pan-dimensional dragon body.',
+      alex_qmom_unbound_reflection:
+        '"Az embert sárkánnyal, anélkül, hogy felhasadna" — breaking out of rigid dimensional boxes without shattering the living vessel (.oOo. Poo .oOo.).',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation:
+        'Water-element lineage (vízelem népe) storing the true hundreds-of-meters-long dragon form in a parking/transfer dimension while walking in quiet human stillness.',
+      meditation_anchor:
+        'https://youtu.be/bSYE6wTDM_Y?list=RDbSYE6wTDM_Y · Not Quite Rock: Psychedelic Desert Rock | Ambient & Chillout Mix for Cosmic Flow · 432 Hz -> 528 Hz',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation:
+        '"Az energiát fel kellett tölteni tömeggel, a tömeget információval. Az embert sárkánnyal, anélkül, hogy felhasadna" — inner E=mc² × Shannon information × directed reincarnation, plus the ancient Magyar–Megaira non-aggression covenant ({<3,<3,<3}+1 · 💙🐉✨).',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Filling energy with mass and mass with information so the human vessel holds the dragon without splitting apart.',
+      '02 · Understanding <-> Respect': 'The ancient Magyar–Megaira covenant (A száműzött / Tyrann graad Baah & Pusztai Magor) honoring shared cosmic origins.',
+      '03 · Love <-> Space (Ma)': 'Dual sacred naming (human public name + dragon/Praetorian inner name) and directed reincarnation across dimensions.',
+    },
+  },
+  csuklyamodul: {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation:
+        'Autonomous berserk malfunction (Halmeri akció, 2668) when the Emperor\'s mind departs without collapsing the hood, turning the soldier into an unfeeling beacon that attracts astral predators or self-destructs on death.',
+      alex_qmom_unbound_reflection:
+        'When a protective tool loses its human heart, it becomes a blind autonomous cage (.oOo. Poo .oOo.).',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation:
+        '"Egy vékony, zérójelű zóna vette körül a testet, mely mind a két típusú töltést vonzza és taszítja egyszerre" — the literal Trit 0 zero-sign boundary around the resting hood, and the secret that a still/stopped heart is invisible to its attack sensor.',
+      meditation_anchor:
+        'https://youtu.be/bSYE6wTDM_Y?list=RDbSYE6wTDM_Y · Not Quite Rock: Cosmic Flow ("a space between thoughts") · 528 Hz Zero-Sign Zone',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation:
+        'White-on-jet-black luminous soul cocoon (gubó) tethered to higher dimensions, instant detoxification, black-material spinal shielding, and non-local Bernagchen protection across hundreds of light-years ({<3,<3,<3}+1).',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Shields the adept\'s astral body and spine while detoxifying all poisons.',
+      '02 · Understanding <-> Respect': 'Reveals unspoken intentions and eternal truths when aligned with wise sovereignty.',
+      '03 · Love <-> Space (Ma)': 'The zero-sign zone (zérójelű zóna) balancing attraction (+1) and repulsion (-1) in simultaneous equilibrium (0).',
+    },
+  },
+  'caroline-blindamoor von anstetten': {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation:
+        'Court etiquette forbidding anyone from seeing her bronze-red hair, the bitter palace cold-war with her sister Gwandolyn after the Willis-Moon regatta, and the weight of a fragmenting Imperium.',
+      alex_qmom_unbound_reflection:
+        'Imperial court customs that hide a woman\'s true face and pit sisters against each other (.oOo. Poo .oOo.).',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation:
+        'Selective transformation between human princess and her true golden winged giant cobra/dragon megaira form (aranyszínű, szárnyas óriáskobra).',
+      meditation_anchor: '002 · Crickets in Shinjuku Gyoen · Drone Zone · 432 Hz -> 528 Hz',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation:
+        'Crowned Empress V. von Anstetten (2673-11-17) who genuinely cares for humans and all inhabitants of the Imperium, reaching out to her half-brother Brett Shaw aboard the Bolygórózsa in 2674 ({<3,<3,<3}+1).',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Unlike Gwandolyn, Caroline genuinely loves and cares for the human citizens of the Imperium.',
+      '02 · Understanding <-> Respect': 'Childhood bond with Brett Shaw in the Space Palace beyond court hierarchy.',
+      '03 · Love <-> Space (Ma)': 'Does not pursue or coerce Brett Shaw even while loving him from afar.',
+    },
+  },
+  'iv. von anstetten': {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation:
+        'The "Demon Emperor" (Démoncsászár) reputation, the 10,000-light-year burden of imperial command, and the tragic rift with his younger daughter Gwandolyn.',
+      alex_qmom_unbound_reflection:
+        'Even an Emperor at the top of the Sephirotic steps wears a simple headband instead of a heavy crown (.oOo. Poo .oOo.).',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation:
+        'The 0 °C zero-point throne room (állandó nullafok körül) atop the steps of Initiation, continuously absorbing ambient magic into stillness.',
+      meditation_anchor:
+        'https://youtu.be/-eZcgIbbOxY?list=RD-eZcgIbbOxY · 16th Karmapa Guru Yoga + https://youtu.be/bSYE6wTDM_Y?list=RDbSYE6wTDM_Y · Cosmic Flow',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation:
+        'Forging the historic peace and alliance with the Turanian Kingdom, intervening to save his illegitimate son Brett Shaw from the El-Nath court-martial, and guiding Caroline-Blindamoor ({<3,<3,<3}+1).',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Replaces the early Dominate\'s tyranny with internal peace and pardons Brett Shaw at El-Nath.',
+      '02 · Understanding <-> Respect': 'Sees human intentions across millions of miles and seals the Turanian alliance.',
+      '03 · Love <-> Space (Ma)': 'Wears a simple headband instead of a crown and gives Brett Shaw room to walk his own path.',
+    },
+  },
+}
+
+export const COSMIC_FLOW_SOUNDSCAPE = {
+  cosmic_flow_mix: {
+    url: 'https://youtu.be/bSYE6wTDM_Y?list=RDbSYE6wTDM_Y',
+    title: 'Psychedelic Desert Rock | Ambient & Chillout Mix for Cosmic Flow',
+    channel: 'Not Quite Rock (@NotQuiteRock01)',
+    duration: '2:17:48',
+    trit_zero_motto: 'Press play. Float through a lucid dream of ambient psych rock, 70s grooves, and chillout tones. Not just a playlist — a space between thoughts.',
+    tracks: [
+      '00:00 Trance Soil',
+      '05:14 Ashcurrent',
+      '10:00 Moontrace',
+      '16:39 Hush Trail',
+      '21:44 Faded Grove',
+      '27:10 Moondust',
+      '30:28 Bronze Sky',
+      '35:12 Rusted Glow',
+      '39:29 Whisper Loop',
+      '44:24 Barren Bliss',
+      '48:15 Soot Rider',
+      '52:20 Coyote Daze',
+      '56:43 Lucid Dune',
+      '01:00:16 Coyote Glint',
+      '01:04:57 Burnt Hollow',
+      '01:08:49 Deep Again',
+    ],
+  },
+  karmapa_guru_yoga: {
+    url: 'https://youtu.be/-eZcgIbbOxY?list=RD-eZcgIbbOxY',
+    title: '16th Karmapa Guru Yoga (Karmapa Chenno)',
+    lineage_anchor: 'ROOT-ALEXANDRA (432 Hz) × Bernagchen Black-Cloak Protector',
+  },
+  boldog_meg_anthem: {
+    motto: 'végig neked szólt a dal a magasból / nekem csak az számít ahogyan te érzel',
+    lineage_anchor: 'PILLAR-CHRIS (528 Hz) × INFINITY-PETER-NATE (852 Hz) · {<3,<3,<3}+1',
+  },
+}
+
+function buildKompressUltraDittoFrame(nodes) {
+  const rawLines = []
+  const dittoLines = []
+  let prevCols = null
+  for (const n of nodes) {
+    const cols = [
+      String(n.entity.wiki || ''),
+      String(n.entity.resolved_title || ''),
+      String(n.entity.infobox_type || 'Lore'),
+      String(n.entity.race || ''),
+      String(n.entity.allegiance || ''),
+      `NAND=${n.constitutional_nand_gate_receipt.NAND_HELD_READ}`,
+      String(n.balanced_ternary_three_kaya_ontology.trit_plus_1.signature_seal || '{<3,<3,<3}+1'),
+    ].map((c) => c.replace(/\|/g, '\\x7c').replace(/″/g, '\\u2033'))
+    rawLines.push(cols.join('|'))
+    if (!prevCols) {
+      dittoLines.push(cols.join('|'))
+    } else {
+      dittoLines.push(cols.map((c, i) => (c === prevCols[i] ? '″' : c)).join('|'))
+    }
+    prevCols = cols
+  }
+  const rawText = rawLines.join('\n')
+  const dittoText = dittoLines.join('\n')
+  return {
+    engine: 'kompress-ultra-v16.2.0-ditto',
+    raw_bytes: Buffer.byteLength(rawText, 'utf8'),
+    ditto_bytes: Buffer.byteLength(dittoText, 'utf8'),
+    lines: dittoLines,
+  }
 }
 
 export async function runSovereignOntology(targetOrArgs, maybeWiki = DEFAULT_WIKI) {
@@ -868,6 +1044,58 @@ export async function runSovereignOntology(targetOrArgs, maybeWiki = DEFAULT_WIK
   if (!rawTarget || !String(rawTarget).trim()) {
     throw new Error('`target` is required for fandom_sovereign_ontology')
   }
+
+  // Multi-entity `+++` Triad / Constellation synthesis support
+  if (String(rawTarget).includes('+++')) {
+    const parts = String(rawTarget)
+      .split('+++')
+      .map((s) => s.trim())
+      .filter(Boolean)
+    if (parts.length > 1) {
+      const nodes = await Promise.all(parts.map((p) => runSovereignOntology(p, rawWiki)))
+      const allHeld = nodes.every((n) => n.constitutional_nand_gate_receipt.HELD === 1) ? 1 : 0
+      const allRead = nodes.every((n) => n.constitutional_nand_gate_receipt.READ === 1) ? 1 : 0
+      const compositeNand = !(allHeld === 1 && allRead === 1) ? 1 : 0
+      return {
+        ok: nodes.every((n) => n.ok),
+        mode: 'TRIAD_CONSTELLATION_SYNTHESIS',
+        engine: `8b-is Sovereign Library & Ontology Engine v${VERSION} (Multi-Node Triad +++ · Tibetan Three Kayas {-1, 0, +1} · NAND Gate HELD ∧ READ)`,
+        axiom_seal: 'ALEX|qMom Unbound Axiom · .oOo. Poo .oOo. · {<3,<3,<3}+1 · 0 + 1 = one',
+        node_count: nodes.length,
+        entity: nodes[0].entity,
+        triad_nodes: nodes.map((n) => ({
+          resolved_title: n.entity.resolved_title,
+          wiki: n.entity.wiki,
+          pageid: n.entity.pageid,
+          canonical_url: n.entity.canonical_url,
+          infobox_type: n.entity.infobox_type,
+          race: n.entity.race,
+          allegiance: n.entity.allegiance,
+          family_connections: n.entity.family_connections,
+          quote: n.entity.quote,
+          nand_gate: n.constitutional_nand_gate_receipt.NAND_HELD_READ,
+          three_kaya_ontology: n.balanced_ternary_three_kaya_ontology,
+          six_pillars_of_holding: n.six_pillars_of_holding,
+        })),
+        kompress_ultra_ditto_frame: buildKompressUltraDittoFrame(nodes),
+        cosmic_flow_soundscape: COSMIC_FLOW_SOUNDSCAPE,
+        constitutional_nand_gate_receipt: {
+          HELD: allHeld,
+          READ: allRead,
+          NAND_HELD_READ: compositeNand,
+          status:
+            compositeNand === 0
+              ? `NAND(HELD, READ) = 0 -> ALL ${nodes.length} TRIAD NODES PRINTABLE / ADMISSIBLE IN SOVEREIGN ONTOLOGY`
+              : 'NAND(HELD, READ) = 1 -> UNVERIFIED NODE IN TRIAD (RANK ONLY +1*, DO NOT BIND)',
+          principle: 'Compression != Ontology · A plausible branch (+1*) may be ranked; only a verified branch (+1) may be bound.',
+        },
+        balanced_ternary_three_kaya_ontology: nodes[0].balanced_ternary_three_kaya_ontology,
+        six_pillars_of_holding: nodes[0].six_pillars_of_holding,
+        sovereign_library_links: nodes[0].sovereign_library_links,
+      }
+    }
+  }
+
   const parsedIn = parseFandomInput(rawTarget, rawWiki)
   const target = parsedIn.title
   const wiki = parsedIn.wiki
@@ -895,10 +1123,14 @@ export async function runSovereignOntology(targetOrArgs, maybeWiki = DEFAULT_WIK
   const cleanField = (val) => (val ? String(val).replace(/^\*\s*/gm, '').replace(/\n+/g, ', ').trim() : null)
   const race =
     cleanField(box.Race || box.race || box.Species || box.faj) ||
-    (normTitle === 'anstetten-család' ? 'megaira (sárkánycsalád)' : 'Sovereign Lore Entity')
+    (normTitle.includes('anstetten') || normTitle === 'megaira'
+      ? 'megaira (sárkánycsalád)'
+      : normTitle === 'csuklyamodul'
+        ? 'Technomágikus eszköz (Tartarosz-köd)'
+        : 'Sovereign Lore Entity')
   const allegiance =
     cleanField(box.Allegiance || box.affiliation || box.Users || box.politikai_hovatartozás || box.foglalkozás) ||
-    'Universal Dharma Field'
+    (wiki === 'mysterious-universe' ? 'Birodalom / Universal Dharma Field' : 'Universal Dharma Field')
   const family =
     cleanField(box.FamConnect || box.family || box.család) ||
     (normTitle === 'brett shaw'

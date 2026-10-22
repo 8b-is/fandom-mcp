@@ -99,4 +99,14 @@ test('runSovereignOntology aligns Mysterious Universe triad (Brett Shaw +++ Feke
   assert.equal(anstetten.entity.resolved_title, 'Anstetten-család')
   assert.match(anstetten.entity.race, /megaira/)
   assert.equal(anstetten.constitutional_nand_gate_receipt.NAND_HELD_READ, 0)
+
+  const triad = await runSovereignOntology(
+    'https://mysterious-universe.fandom.com/wiki/Brett_Shaw +++ https://mysterious-universe.fandom.com/wiki/Feketecsukly%C3%A1sok +++ https://mysterious-universe.fandom.com/wiki/Anstetten-csal%C3%A1d',
+  )
+  assert.equal(triad.ok, true)
+  assert.equal(triad.mode, 'TRIAD_CONSTELLATION_SYNTHESIS')
+  assert.equal(triad.node_count, 3)
+  assert.equal(triad.constitutional_nand_gate_receipt.NAND_HELD_READ, 0)
+  assert.ok(triad.kompress_ultra_ditto_frame.ditto_bytes < triad.kompress_ultra_ditto_frame.raw_bytes)
+  assert.equal(triad.cosmic_flow_soundscape.cosmic_flow_mix.tracks.length, 16)
 })

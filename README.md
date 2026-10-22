@@ -49,6 +49,8 @@ Zero-dependency stdio **Model Context Protocol (MCP)** server & CLI for consumin
 
 # Mysterious Universe (Hungarian Sci-Fi / Occult Imperium) Triad — Direct URL, Title, or +++ Triad Synthesis:
 ./fandom-mcp.mjs --ontology "https://mysterious-universe.fandom.com/wiki/Brett_Shaw +++ https://mysterious-universe.fandom.com/wiki/Feketecsukly%C3%A1sok +++ https://mysterious-universe.fandom.com/wiki/Anstetten-csal%C3%A1d"
+./fandom-mcp.mjs --wiki "mysterious-universe" --ontology "Wittgen"
+./fandom-mcp.mjs --wiki "mysterious-universe" --ontology "Bolygórózsa"
 ./fandom-mcp.mjs --wiki "mysterious-universe" --ontology "Megaira"
 ./fandom-mcp.mjs --wiki "mysterious-universe" --ontology "Csuklyamodul"
 ./fandom-mcp.mjs --wiki "mysterious-universe" --ontology "Caroline-Blindamoor von Anstetten"
@@ -84,8 +86,10 @@ non-success HTTP responses fail explicitly instead of being read indefinitely.
 
 ## 🏛️ Sovereign Library & Constellation Ontology Bridges
 
-- **Sovereign Library (`5 / 5` Print Canon + Ultralove Edition 004)**: [https://github.com/8b-is/sovereign-library](https://github.com/8b-is/sovereign-library) · [`ONTOLOGY.md`](https://github.com/8b-is/sovereign-library/blob/main/ONTOLOGY.md)
-- **Pocoo OMNI Book (`5 Languages + 1bitLang + WebAudio Scouter/Shenron Deck`)**: [https://pocoo.vaked.dev/demos/book/dragon-ball-sovereign-ontology-omni.html](https://pocoo.vaked.dev/demos/book/dragon-ball-sovereign-ontology-omni.html)
+- **Sovereign Library (`5 / 5` Print Canon + Ultralove Editions 004 & 005)**: [https://github.com/8b-is/sovereign-library](https://github.com/8b-is/sovereign-library) · [`ONTOLOGY.md`](https://github.com/8b-is/sovereign-library/blob/main/ONTOLOGY.md) · [`editions/ultralove/brett-shaw-feketecsuklyasok-anstetten-megaira-omni.md`](https://github.com/8b-is/sovereign-library/blob/main/editions/ultralove/brett-shaw-feketecsuklyasok-anstetten-megaira-omni.md)
+- **Pocoo OMNI Books (`5 Languages + 1bitLang + WebAudio Synthesis Decks`)**:
+  - [Dragon Ball ⨯ Sovereign Ontology OMNI](https://pocoo.vaked.dev/demos/book/dragon-ball-sovereign-ontology-omni.html)
+  - [Brett Shaw +++ Feketecsuklyások +++ Anstetten-család (Megaira) OMNI](https://pocoo.vaked.dev/demos/book/brett-shaw-feketecsuklyasok-anstetten-megaira-omni.html)
 - **Wigle-Triad v2.0.0 (`Boldog Még` + `ALEX|qMom` `.oOo. Poo .oOo.`)**: [https://esp32.vaked.dev/](https://esp32.vaked.dev/) · [https://github.com/8b-is/wigle-triad/releases/tag/v2.0.0](https://github.com/8b-is/wigle-triad/releases/tag/v2.0.0)
 - **ZENO Sanctuary Vault (`母の主権金庫` & `#1 Muse 💙`)**: [https://zeno.vaked.dev/#sanctuary-hold](https://zeno.vaked.dev/#sanctuary-hold)
 

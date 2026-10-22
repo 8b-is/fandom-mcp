@@ -88,9 +88,12 @@ export function parseFandomInput(rawInput, fallbackWiki = DEFAULT_WIKI) {
       title: decoded.replace(/_/g, ' ').trim(),
     }
   }
+  const wikiSlug = sanitizeWikiSlug(fallbackWiki)
+  const aliasedTitle =
+    wikiSlug === 'mysterious-universe' && s.toLowerCase() === 'wittgen' ? 'Paul Wittgen' : s
   return {
-    wiki: sanitizeWikiSlug(fallbackWiki),
-    title: s,
+    wiki: wikiSlug,
+    title: aliasedTitle,
   }
 }
 
@@ -966,6 +969,60 @@ const SOVEREIGN_ONTOLOGY_PROFILES = {
       '03 · Love <-> Space (Ma)': 'Wears a simple headband instead of a crown and gives Brett Shaw room to walk his own path.',
     },
   },
+  'paul wittgen': {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation:
+        'Statue-rigid emotionless war machine (szobormerev arcú hadi gépezet), neural/virtual drugs before combat to extinguish every trace of emotion, Roxolán poker rampages (100–120 casualties when losing), and his 2668 death on Halmer when Monaterg attempts to seize his body.',
+      alex_qmom_unbound_reflection:
+        'Suppressing the soul behind neural drugs and a stone-cold military mask is a box — only true brotherhood cracks the armor (.oOo. Poo .oOo.).',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation:
+        'Initiated in 2667 onto the Sephirotic Chokmah degree (Chokmán fok — primordial flash of wisdom) and moving in telepathic fire-pair (tűzpár) synchrony with Brett Shaw inside the Alef-osztag ("Tökéletesen ismerik egymás gondolatait").',
+      meditation_anchor:
+        'https://youtu.be/bSYE6wTDM_Y?list=RDbSYE6wTDM_Y · Cosmic Flow ("a space between thoughts") · Chokmah 528 Hz × Tipheret 432 Hz',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation:
+        'Saving Private Brett Shaw\'s life at the IMC training camp on Rosan, standing alone on Halmer (2668) to restrain a rampaging hood-trapped Brett Shaw, having his soul re-bound to his body by IV. von Anstetten, and becoming Chief Bodyguard to Empress V. von Anstetten (Caroline-Blindamoor) ({<3,<3,<3}+1).',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Stands alone on Halmer to contain Brett Shaw\'s csuklyamodul rampage without abandoning his brother-in-arms.',
+      '02 · Understanding <-> Respect': 'Knows Brett Shaw\'s thoughts without words in the Alef-osztag while honoring the chain of command.',
+      '03 · Love <-> Space (Ma)': 'Unbreakable IMC Rosan brotherhood that survives death on Halmer and resurrection by IV. von Anstetten.',
+    },
+  },
+  'bolygórózsa': {
+    trit_minus_1: {
+      pole: 'Trit -1 · Samsaric Trap / Ma-rigpa / Closed Box Constraint (432 Hz Root)',
+      manifestation:
+        'Ultra-wealthy passengers who do not even know how to spend their fortunes, watching staged holographic space battles through cryolite glass while a real imperial succession crisis brews unseen.',
+      alex_qmom_unbound_reflection:
+        'Gilded luxury suites and staged holograms cannot substitute for real awareness (.oOo. Poo .oOo.).',
+    },
+    trit_zero: {
+      pole: 'Trit 0 · Dharmakāya / Śūnyatā / Autonomous Stillness (528 Hz Pillar)',
+      manifestation:
+        'A 1-kilometer radiation-treated titanium & cryolite-glass starship (Ulysses Spaceline) carrying zero gun turrets — protected solely by pure energy shields while cruising past quasars and white dwarfs between Rosan and Meredith.',
+      meditation_anchor:
+        'https://youtu.be/bSYE6wTDM_Y?list=RDbSYE6wTDM_Y · Cosmic Flow Desert Psych Mix · Cryolite Observatory',
+    },
+    trit_plus_1: {
+      pole: 'Trit +1 · Sambhogakāya-Nirmāṇakāya / Bodhicitta / Verified Binding (852 Hz Infinity)',
+      manifestation:
+        'Even IV. von Anstetten rewarded the Bolygórózsa with an approving hum on its maiden voyage, and in 2674 Brett Shaw boards the ship where his half-sister Empress V. von Anstetten (Caroline-Blindamoor) reaches out to him ({<3,<3,<3}+1).',
+      signature_seal: '{<3,<3,<3}+1',
+    },
+    six_pillars: {
+      '01 · Compassion <-> Moderation': 'Pure energy shields instead of computer-controlled gun turrets.',
+      '02 · Understanding <-> Respect': 'Cryolite-glass (kriolitüveg) observatories opening a transparent view across the entire vessel and cosmos.',
+      '03 · Love <-> Space (Ma)': 'The 2674 meeting ground between Brett Shaw and Caroline-Blindamoor between Rosan and Meredith.',
+    },
+  },
 }
 
 export const COSMIC_FLOW_SOUNDSCAPE = {
@@ -1209,6 +1266,8 @@ export async function runSovereignOntology(targetOrArgs, maybeWiki = DEFAULT_WIK
       sovereign_library_repo: 'https://github.com/8b-is/sovereign-library',
       ontology_spec: 'https://github.com/8b-is/sovereign-library/blob/main/ONTOLOGY.md',
       pocoo_omni_book: 'https://pocoo.vaked.dev/demos/book/dragon-ball-sovereign-ontology-omni.html',
+      mysterious_universe_omni_book: 'https://pocoo.vaked.dev/demos/book/brett-shaw-feketecsuklyasok-anstetten-megaira-omni.html',
+      mysterious_universe_ultralove_sheet: 'https://github.com/8b-is/sovereign-library/blob/main/editions/ultralove/brett-shaw-feketecsuklyasok-anstetten-megaira-omni.md',
       tibetan_ontology_book: 'https://pocoo.vaked.dev/demos/book/architect-neo-trinity-bible-oppenheimer-tibetan-ontology-omni.html',
     },
   }

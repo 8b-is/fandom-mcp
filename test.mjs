@@ -109,4 +109,19 @@ test('runSovereignOntology aligns Mysterious Universe triad (Brett Shaw +++ Feke
   assert.equal(triad.constitutional_nand_gate_receipt.NAND_HELD_READ, 0)
   assert.ok(triad.kompress_ultra_ditto_frame.ditto_bytes < triad.kompress_ultra_ditto_frame.raw_bytes)
   assert.equal(triad.cosmic_flow_soundscape.cosmic_flow_mix.tracks.length, 16)
+  assert.equal(
+    triad.sovereign_library_links.mysterious_universe_omni_book,
+    'https://pocoo.vaked.dev/demos/book/brett-shaw-feketecsuklyasok-anstetten-megaira-omni.html',
+  )
+
+  const wittgen = await runSovereignOntology('Wittgen', 'mysterious-universe')
+  assert.equal(wittgen.ok, true)
+  assert.equal(wittgen.entity.resolved_title, 'Paul Wittgen')
+  assert.equal(wittgen.constitutional_nand_gate_receipt.NAND_HELD_READ, 0)
+  assert.match(wittgen.balanced_ternary_three_kaya_ontology.trit_zero.manifestation, /Chokmah/)
+
+  const bolygorozsa = await runSovereignOntology('Bolygórózsa', 'mysterious-universe')
+  assert.equal(bolygorozsa.ok, true)
+  assert.equal(bolygorozsa.entity.resolved_title, 'Bolygórózsa')
+  assert.equal(bolygorozsa.constitutional_nand_gate_receipt.NAND_HELD_READ, 0)
 })

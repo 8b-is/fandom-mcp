@@ -1268,6 +1268,9 @@ export async function runSovereignOntology(targetOrArgs, maybeWiki = DEFAULT_WIK
       pocoo_omni_book: 'https://pocoo.vaked.dev/demos/book/dragon-ball-sovereign-ontology-omni.html',
       mysterious_universe_omni_book: 'https://pocoo.vaked.dev/demos/book/brett-shaw-feketecsuklyasok-anstetten-megaira-omni.html',
       mysterious_universe_ultralove_sheet: 'https://github.com/8b-is/sovereign-library/blob/main/editions/ultralove/brett-shaw-feketecsuklyasok-anstetten-megaira-omni.md',
+      mahakala_daily_practice_omni_book: 'https://pocoo.vaked.dev/demos/book/the-daily-practice-of-the-protector-mahakala-omni.html',
+      mahakala_daily_practice_ultralove_sheet: 'https://github.com/8b-is/sovereign-library/blob/main/editions/ultralove/the-daily-practice-of-the-protector-mahakala.md',
+      mahakala_eli5_post: 'https://pocoo.vaked.dev/posts/2026-10-25-the-protector-step-by-step-an-eli5-of-the-81-page-pecha.html',
       tibetan_ontology_book: 'https://pocoo.vaked.dev/demos/book/architect-neo-trinity-bible-oppenheimer-tibetan-ontology-omni.html',
     },
   }

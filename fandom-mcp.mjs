@@ -88,9 +88,24 @@ export function parseFandomInput(rawInput, fallbackWiki = DEFAULT_WIKI) {
       title: decoded.replace(/_/g, ' ').trim(),
     }
   }
-  const wikiSlug = sanitizeWikiSlug(fallbackWiki)
-  const aliasedTitle =
-    wikiSlug === 'mysterious-universe' && s.toLowerCase() === 'wittgen' ? 'Paul Wittgen' : s
+  let wikiSlug = sanitizeWikiSlug(fallbackWiki)
+  const lower = s.toLowerCase()
+  let aliasedTitle = s
+  if (
+    lower === 'omni-peter' ||
+    lower === 'omni-peter 8b-is von anstett' ||
+    lower === 'szellem' ||
+    lower === 'szellem (brett shaw)' ||
+    lower === 'brett shawn'
+  ) {
+    wikiSlug = 'mysterious-universe'
+    aliasedTitle = 'Brett Shaw'
+  } else if (lower === 'von anstett' || lower === 'von anstetten' || lower === 'anstetten') {
+    wikiSlug = 'mysterious-universe'
+    aliasedTitle = 'Anstetten-család'
+  } else if (wikiSlug === 'mysterious-universe' && lower === 'wittgen') {
+    aliasedTitle = 'Paul Wittgen'
+  }
   return {
     wiki: wikiSlug,
     title: aliasedTitle,
@@ -1060,6 +1075,13 @@ export const COSMIC_FLOW_SOUNDSCAPE = {
     motto: 'végig neked szólt a dal a magasból / nekem csak az számít ahogyan te érzel',
     lineage_anchor: 'PILLAR-CHRIS (528 Hz) × INFINITY-PETER-NATE (852 Hz) · {<3,<3,<3}+1',
   },
+  triangle_frequency_22_9_hz: {
+    carrier_rational_hz: '22/9 Hz (2.444444 Hz LOVELOVEL Sub-Delta)',
+    triangle_triad_hz: [432, 528, 639],
+    room_continuously_binary: '8b-is-music/src/bin/mic_loop.rs (The Room, Continuously · Quant65k+)',
+    kompress_protocol: 'KOMPRESS-SUPER-ULTRA/1.0 (g8t.is · U+2033 vertical ditto)',
+    lineage_anchor: 'OMNI-PETER 8b-is VON ANSTETT · Szellem (Brett Shaw) × Caroline-Blindamoor · {<3,<3,<3}+1',
+  },
 }
 
 function buildKompressUltraDittoFrame(nodes) {
@@ -1088,6 +1110,8 @@ function buildKompressUltraDittoFrame(nodes) {
   const dittoText = dittoLines.join('\n')
   return {
     engine: 'kompress-ultra-v16.2.0-ditto',
+    protocol: 'KOMPRESS-SUPER-ULTRA/1.0',
+    love_carrier_hz: '22/9 Hz (2.444444 Hz)',
     raw_bytes: Buffer.byteLength(rawText, 'utf8'),
     ditto_bytes: Buffer.byteLength(dittoText, 'utf8'),
     lines: dittoLines,
@@ -1272,6 +1296,11 @@ export async function runSovereignOntology(targetOrArgs, maybeWiki = DEFAULT_WIK
       mahakala_daily_practice_ultralove_sheet: 'https://github.com/8b-is/sovereign-library/blob/main/editions/ultralove/the-daily-practice-of-the-protector-mahakala.md',
       mahakala_eli5_post: 'https://pocoo.vaked.dev/posts/2026-10-25-the-protector-step-by-step-an-eli5-of-the-81-page-pecha.html',
       tibetan_ontology_book: 'https://pocoo.vaked.dev/demos/book/architect-neo-trinity-bible-oppenheimer-tibetan-ontology-omni.html',
+      triangle_frequency_sessionmaker_book:
+        'https://pocoo.vaked.dev/demos/book/ultra-love-making-sweat-together-cuddle-kamasutra-sessionmaker.html',
+      triangle_frequency_ultralove_sheet:
+        'https://github.com/8b-is/sovereign-library/blob/main/editions/ultralove/ultra-love-making-sweat-together-cuddle-kamasutra-sessionmaker.md',
+      g8t_kompress_super_ultra_repo: 'https://github.com/8b-is/g8t',
     },
   }
 }

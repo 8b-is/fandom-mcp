@@ -47,7 +47,9 @@ Zero-dependency stdio **Model Context Protocol (MCP)** server & CLI for consumin
 ./fandom-mcp.mjs --wiki "onepiece" --ontology "Monkey D. Luffy"
 ./fandom-mcp.mjs --wiki "naruto" --ontology "Naruto Uzumaki"
 
-# Mysterious Universe (Hungarian Sci-Fi / Occult Imperium) Triad — Direct URL, Title, or +++ Triad Synthesis:
+# Mysterious Universe (Hungarian Sci-Fi / Occult Imperium) Triad — Direct URL, Title, OMNI-PETER Alias, or +++ Triad Synthesis:
+./fandom-mcp.mjs --ontology "OMNI-PETER 8b-is VON ANSTETT"
+./fandom-mcp.mjs --ontology "von Anstett"
 ./fandom-mcp.mjs --ontology "https://mysterious-universe.fandom.com/wiki/Brett_Shaw +++ https://mysterious-universe.fandom.com/wiki/Feketecsukly%C3%A1sok +++ https://mysterious-universe.fandom.com/wiki/Anstetten-csal%C3%A1d"
 ./fandom-mcp.mjs --wiki "mysterious-universe" --ontology "Wittgen"
 ./fandom-mcp.mjs --wiki "mysterious-universe" --ontology "Bolygórózsa"
@@ -86,10 +88,13 @@ non-success HTTP responses fail explicitly instead of being read indefinitely.
 
 ## 🏛️ Sovereign Library & Constellation Ontology Bridges
 
-- **Sovereign Library (`5 / 5` Print Canon + Ultralove Editions 004 & 005)**: [https://github.com/8b-is/sovereign-library](https://github.com/8b-is/sovereign-library) · [`ONTOLOGY.md`](https://github.com/8b-is/sovereign-library/blob/main/ONTOLOGY.md) · [`editions/ultralove/brett-shaw-feketecsuklyasok-anstetten-megaira-omni.md`](https://github.com/8b-is/sovereign-library/blob/main/editions/ultralove/brett-shaw-feketecsuklyasok-anstetten-megaira-omni.md)
+- **Sovereign Library (`5 / 5` Print Canon + Ultralove Editions 004–010)**: [https://github.com/8b-is/sovereign-library](https://github.com/8b-is/sovereign-library) · [`ONTOLOGY.md`](https://github.com/8b-is/sovereign-library/blob/main/ONTOLOGY.md) · [`editions/ultralove/brett-shaw-feketecsuklyasok-anstetten-megaira-omni.md`](https://github.com/8b-is/sovereign-library/blob/main/editions/ultralove/brett-shaw-feketecsuklyasok-anstetten-megaira-omni.md) · [`editions/ultralove/ultra-love-making-sweat-together-cuddle-kamasutra-sessionmaker.md`](https://github.com/8b-is/sovereign-library/blob/main/editions/ultralove/ultra-love-making-sweat-together-cuddle-kamasutra-sessionmaker.md)
 - **Pocoo OMNI Books (`5 Languages + 1bitLang + WebAudio Synthesis Decks`)**:
   - [Dragon Ball ⨯ Sovereign Ontology OMNI](https://pocoo.vaked.dev/demos/book/dragon-ball-sovereign-ontology-omni.html)
-  - [Brett Shaw +++ Feketecsuklyások +++ Anstetten-család (Megaira) OMNI](https://pocoo.vaked.dev/demos/book/brett-shaw-feketecsuklyasok-anstetten-megaira-omni.html)
+  - [Brett Shaw +++ Feketecsuklyások +++ Anstetten-család (Megaira) · OMNI-PETER 8b-is VON ANSTETT](https://pocoo.vaked.dev/demos/book/brett-shaw-feketecsuklyasok-anstetten-megaira-omni.html)
+  - [8b-is Triangle Frequency (`432×528×639 Hz` + `22/9 Hz LOVELOVEL` Sessionmaker)](https://pocoo.vaked.dev/demos/book/ultra-love-making-sweat-together-cuddle-kamasutra-sessionmaker.html)
+  - [The Daily Practice of the Protector Mahākāla (81-Folio Pecha)](https://pocoo.vaked.dev/demos/book/the-daily-practice-of-the-protector-mahakala-omni.html)
+- **`g8t.is` (`KOMPRESS-SUPER-ULTRA/1.0` · `22/9 Hz` Rational Carrier · `U+2033` Vertical Ditto)**: [https://github.com/8b-is/g8t](https://github.com/8b-is/g8t)
 - **Wigle-Triad v2.0.0 (`Boldog Még` + `ALEX|qMom` `.oOo. Poo .oOo.`)**: [https://esp32.vaked.dev/](https://esp32.vaked.dev/) · [https://github.com/8b-is/wigle-triad/releases/tag/v2.0.0](https://github.com/8b-is/wigle-triad/releases/tag/v2.0.0)
 - **ZENO Sanctuary Vault (`母の主権金庫` & `#1 Muse 💙`)**: [https://zeno.vaked.dev/#sanctuary-hold](https://zeno.vaked.dev/#sanctuary-hold)
 

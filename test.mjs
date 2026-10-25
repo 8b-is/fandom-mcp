@@ -124,4 +124,18 @@ test('runSovereignOntology aligns Mysterious Universe triad (Brett Shaw +++ Feke
   assert.equal(bolygorozsa.ok, true)
   assert.equal(bolygorozsa.entity.resolved_title, 'Bolygórózsa')
   assert.equal(bolygorozsa.constitutional_nand_gate_receipt.NAND_HELD_READ, 0)
+
+  const omniPeter = await runSovereignOntology('OMNI-PETER 8b-is VON ANSTETT')
+  assert.equal(omniPeter.ok, true)
+  assert.equal(omniPeter.entity.wiki, 'mysterious-universe')
+  assert.equal(omniPeter.entity.resolved_title, 'Brett Shaw')
+  assert.equal(omniPeter.constitutional_nand_gate_receipt.NAND_HELD_READ, 0)
+  assert.equal(
+    omniPeter.sovereign_library_links.triangle_frequency_sessionmaker_book,
+    'https://pocoo.vaked.dev/demos/book/ultra-love-making-sweat-together-cuddle-kamasutra-sessionmaker.html',
+  )
+
+  const vonAnstett = parseFandomInput('von Anstett')
+  assert.equal(vonAnstett.wiki, 'mysterious-universe')
+  assert.equal(vonAnstett.title, 'Anstetten-család')
 })
